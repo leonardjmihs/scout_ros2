@@ -29,6 +29,14 @@
             <radius>0.0508</radius>
           </cylinder>
         </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
       </collision>
       <visual name='base_link_visual'>
         <pose>0 0 0 1.5707 0 1.5707</pose>
@@ -48,6 +56,24 @@
           </mesh>
         </geometry>
       </visual>
+      <gravity>1</gravity>
+      <sensor name='imu_sensor' type='imu'>
+        <always_on>1</always_on>
+        <update_rate>100</update_rate>
+        <visualize>1</visualize>
+        <topic>__default_topic__</topic>
+        <plugin name='imu_plugin' filename='libgazebo_ros_imu_sensor.so'>
+          <topicName>imu</topicName>
+          <bodyName>base_scan</bodyName>
+          <updateRateHZ>100.0</updateRateHZ>
+          <gaussianNoise>0.0</gaussianNoise>
+          <xyzOffset>0 0 0</xyzOffset>
+          <rpyOffset>0 0 0</rpyOffset>
+          <frameName>imu_link</frameName>
+          <initialOrientationAsReference>0</initialOrientationAsReference>
+        </plugin>
+        <pose>0 0 0 0 -0 0</pose>
+      </sensor>
     </link>
     <joint name='front_left_wheel' type='revolute'>
       <pose relative_to='base_link'>0.226 0.245 -0.0905 0 -0 0</pose>
@@ -245,5 +271,28 @@
         </geometry>
       </visual>
     </link>
+    <static>0</static>
+    <plugin name='gz::sim::systems::DiffDrive' filename='gz-sim-diff-drive-system'>
+      <left_joint>rear_left_wheel</left_joint>
+      <left_joint>front_left_wheel</left_joint>
+      <right_joint>rear_right_wheel</right_joint>
+      <right_joint>front_right_wheel</right_joint>
+      <wheel_separation>0.287</wheel_separation>
+      <wheel_radius>0.0875</wheel_radius>
+      <max_linear_acceleration>3.5</max_linear_acceleration>
+      <topic>cmd_vel</topic>
+      <odom_topic>odom</odom_topic>
+      <frame_id>odom</frame_id>
+      <tf_topic>/tf</tf_topic>
+      <odom_publisher_frequency>30</odom_publisher_frequency>
+      <child_frame_id>base_footprint</child_frame_id>
+    </plugin>
+    <plugin name='gz::sim::systems::JointStatePublisher' filename='gz-sim-joint-state-publisher-system'>
+      <topic>joint_states</topic>
+      <joint_name>rear_left_wheel</joint_name>
+      <joint_name>rear_right_wheel</joint_name>
+      <joint_name>front_left_wheel</joint_name>
+      <joint_name>front_right_wheel</joint_name>
+    </plugin>
   </model>
 </sdf>

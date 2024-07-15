@@ -17,7 +17,8 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 
-install(DIRECTORY launch worlds
+install(DIRECTORY launch worlds params
   DESTINATION share/${PROJECT_NAME}/)
-
+ament_export_dependencies(ros_gz_bridge)
+ament_export_dependencies(ros_gz_sim)
 ament_package()

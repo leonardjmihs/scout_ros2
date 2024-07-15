@@ -69,22 +69,6 @@ def generate_launch_description():
         }.items()
     )
 
-    # bridge_params = os.path.join(
-    #     ugv_sim_dir,
-    #     'params',
-    #     'turtlebot3_waffle_bridge.yaml'
-    # )
-
-    # start_gazebo_ros_bridge_cmd = Node(
-    #     package='ros_gz_bridge',
-    #     executable='parameter_bridge',
-    #     arguments=[
-    #         '--ros-args',
-    #         '-p',
-    #         f'config_file:={bridge_params}',
-    #     ],
-    #     output='screen',
-    # )
     ld = LaunchDescription()
 
     # Add the commands to the launch description

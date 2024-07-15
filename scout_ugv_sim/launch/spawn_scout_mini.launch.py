@@ -77,6 +77,7 @@ def generate_launch_description():
     # ld.add_action(load_server_node)
     ld.add_action(load_sim_nodes)
     # ld.add_action(load_composable_nodes)turtlebot3_gazebo
+    ld.add_action(start_gazebo_ros_bridge_cmd)
     return ld
     
 
