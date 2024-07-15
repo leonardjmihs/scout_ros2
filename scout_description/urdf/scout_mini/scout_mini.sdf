@@ -2,15 +2,15 @@
   <model name='scout_mini'>
     <link name='base_link'>
       <inertial>
-        <pose>0 0 0 0 -0 0</pose>
-        <mass>18</mass>
+        <pose>-2.9e-05 0 6.2e-05 0 -0 0</pose>
+        <mass>18.01</mass>
         <inertia>
-          <ixx>2.28864</ixx>
+          <ixx>2.28976</ixx>
           <ixy>0</ixy>
-          <ixz>0</ixz>
-          <iyy>5.10398</iyy>
+          <ixz>5.7688e-05</ixz>
+          <iyy>5.10513</iyy>
           <iyz>0</iyz>
-          <izz>3.43147</izz>
+          <izz>3.43249</izz>
         </inertia>
       </inertial>
       <collision name='base_link_collision'>
@@ -21,12 +21,30 @@
           </box>
         </geometry>
       </collision>
+      <collision name='base_link_fixed_joint_lump__base_scan_collision_1'>
+        <pose>-0.052 0 0.111 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.055</length>
+            <radius>0.0508</radius>
+          </cylinder>
+        </geometry>
+      </collision>
       <visual name='base_link_visual'>
-        <pose>0 0 0 0 -0 0</pose>
+        <pose>0 0 0 1.5707 0 1.5707</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://scout_description/meshes/scout_mini/mini_base_link.dae</uri>
+            <uri>model://scout_description/meshes/scout_mini/mini_base_link2.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='base_link_fixed_joint_lump__base_scan_visual_1'>
+        <pose>-0.064 0 0.121 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://scout_description/meshes/scout_mini/lds.dae</uri>
           </mesh>
         </geometry>
       </visual>
