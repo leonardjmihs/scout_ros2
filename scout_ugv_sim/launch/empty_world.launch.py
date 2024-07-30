@@ -24,7 +24,7 @@ def generate_launch_description():
     # use_sim_time = LaunchConfiguration('use_sim_time', default='true')
     x = LaunchConfiguration('x', default='0.0')
     y = LaunchConfiguration('y', default='0.0')
-    z = LaunchConfiguration('z', default='0.01')
+    z = LaunchConfiguration('z', default='0.1')
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
 
@@ -34,6 +34,12 @@ def generate_launch_description():
         # 'empty_world.world'
         'cylinder_world.world'
     )
+    set_env_vars_resources = AppendEnvironmentVariable(
+            'GAZEBO_MODEL_PATH',
+            # os.path.join(scout_description_dir, 'meshes', 'scout_mini')
+            os.path.dirname(scout_description_dir)
+            )
+    print(os.path.dirname(scout_description_dir))
     gzserver_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_gazebo_ros, 'launch', 'gzserver.launch.py')
@@ -74,6 +80,7 @@ def generate_launch_description():
     ld = LaunchDescription()
 
     # Add the commands to the launch description
+    ld.add_action(set_env_vars_resources)
     ld.add_action(gzserver_cmd)
     ld.add_action(gzclient_cmd)
     ld.add_action(robot_state_publisher_cmd)

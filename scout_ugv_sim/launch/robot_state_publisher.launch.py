@@ -28,7 +28,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
     model_name = 'scout_mini'
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
-    urdf_path = '/home/jungle/workspaces/scout_sim_ws/src/scout_ros2/scout_description/urdf/scout_mini/scout_mini.urdf'
+    urdf_path = '/home/jungle/workspaces/scout_sim_ws/src/scout_ros2/scout_description/urdf/scout_mini.urdf'
 
     # urdf_path = os.path.join(
     #     get_package_share_directory('turtlebot3_gazebo'),
