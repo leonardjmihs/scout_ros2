@@ -18,65 +18,64 @@ ugv_sim_dir = get_package_share_directory('scout_ugv_sim')
 scout_description_dir = get_package_share_directory('scout_description')
 
 def generate_launch_description():
-    pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
-    launch_file_dir = os.path.join(get_package_share_directory('scout_ugv_sim'), 'launch')
+    ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
     # use_sim_time = LaunchConfiguration('use_sim_time', default='true')
     x = LaunchConfiguration('x', default='0.0')
     y = LaunchConfiguration('y', default='0.0')
-    z = LaunchConfiguration('z', default='0.01')
+    z = LaunchConfiguration('z', default='0.5')
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
 
     world = os.path.join(
         ugv_sim_dir,
         'worlds',
-        # 'empty_world.world'
-        'cylinder_world.world'
+        'empty_world.world'
     )
+    set_env_vars_resources = AppendEnvironmentVariable(
+            'GZ_SIM_RESOURCE_PATH',
+            # os.path.join(scout_description_dir, 'meshes', 'scout_mini')
+            os.path.dirname(scout_description_dir)
+            )
+
     gzserver_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(pkg_gazebo_ros, 'launch', 'gzserver.launch.py')
+            os.path.join(ros_gz_sim, 'launch', 'gz_sim.launch.py')
         ),
-        launch_arguments={'world': world}.items()
+        launch_arguments={'gz_args': ['-r -s -v4 ', world], 'on_exit_shutdown': 'true'}.items()
     )
-
     gzclient_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(pkg_gazebo_ros, 'launch', 'gzclient.launch.py')
-        )
+            os.path.join(ros_gz_sim, 'launch', 'gz_sim.launch.py')
+        ),
+        launch_arguments={'gz_args': '-g -v4 '}.items()
     )
 
     robot_state_publisher_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(launch_file_dir, 'robot_state_publisher.launch.py')
+            os.path.join(ugv_sim_dir, 'launch', 'robot_state_publisher.launch.py')
         ),
         launch_arguments={'use_sim_time': use_sim_time}.items()
     )
 
-    spawn_turtlebot_cmd = IncludeLaunchDescription(
+    spawn_scout_mini_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(launch_file_dir, 'spawn_scout_mini.launch.py')
+            os.path.join(ugv_sim_dir, 'launch', 'spawn_scout_mini_gz.launch.py')
         ),
         launch_arguments={
-            'x': x,
-            'y': y, 
-            'z': z,
+            'x':x,
+            'y':y,
+            'z':z
         }.items()
     )
-    map_to_odom = launch_ros.actions.Node(
-        name='map2odom_tf',
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        arguments=['0','0','0','0','0','0','map','odom']
-        )
 
     ld = LaunchDescription()
 
     # Add the commands to the launch description
+    ld.add_action(set_env_vars_resources)
     ld.add_action(gzserver_cmd)
     ld.add_action(gzclient_cmd)
     ld.add_action(robot_state_publisher_cmd)
-    ld.add_action(spawn_turtlebot_cmd)
-    ld.add_action(map_to_odom)
+    ld.add_action(spawn_scout_mini_cmd)
+
     return ld

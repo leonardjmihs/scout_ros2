@@ -18,7 +18,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://scout_description/meshes/scout_mini_base_link2.dae</uri>
+            <uri>model://scout_description/meshes/scout_mini/mini_base_link2.dae</uri>
           </mesh>
         </geometry>
       </collision>
@@ -27,7 +27,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://scout_description/meshes/scout_mini_base_link2.dae</uri>
+            <uri>model://scout_description/meshes/scout_mini/mini_base_link2.dae</uri>
           </mesh>
         </geometry>
       </visual>
@@ -70,22 +70,6 @@
             <uri>model://scout_description/meshes/scout_mini/wheel.dae</uri>
           </mesh>
         </geometry>
-        <surface>
-          <contact>
-            <ode>
-              <kp>1e+09</kp>
-              <kd>0</kd>
-              <min_depth>0.001</min_depth>
-            </ode>
-          </contact>
-          <friction>
-            <ode>
-              <mu>0.9</mu>
-              <mu2>0.7</mu2>
-              <fdir1>1 0 0</fdir1>
-            </ode>
-          </friction>
-        </surface>
       </collision>
       <visual name='front_left_wheel_link_visual'>
         <pose>0 0 0 0 -0 0</pose>
@@ -135,22 +119,6 @@
             <uri>model://scout_description/meshes/scout_mini/wheel.dae</uri>
           </mesh>
         </geometry>
-        <surface>
-          <contact>
-            <ode>
-              <kp>1e+09</kp>
-              <kd>0</kd>
-              <min_depth>0.001</min_depth>
-            </ode>
-          </contact>
-          <friction>
-            <ode>
-              <mu>0.9</mu>
-              <mu2>0.7</mu2>
-              <fdir1>1 0 0</fdir1>
-            </ode>
-          </friction>
-        </surface>
       </collision>
       <visual name='front_right_wheel_link_visual'>
         <pose>0 0 0 0 -0 0</pose>
@@ -200,22 +168,6 @@
             <uri>model://scout_description/meshes/scout_mini/wheel.dae</uri>
           </mesh>
         </geometry>
-        <surface>
-          <contact>
-            <ode>
-              <kp>1e+09</kp>
-              <kd>0</kd>
-              <min_depth>0.001</min_depth>
-            </ode>
-          </contact>
-          <friction>
-            <ode>
-              <mu>0.9</mu>
-              <mu2>0.7</mu2>
-              <fdir1>1 0 0</fdir1>
-            </ode>
-          </friction>
-        </surface>
       </collision>
       <visual name='rear_left_wheel_link_visual'>
         <pose>0 0 0 0 -0 0</pose>
@@ -265,22 +217,6 @@
             <uri>model://scout_description/meshes/scout_mini/wheel.dae</uri>
           </mesh>
         </geometry>
-        <surface>
-          <contact>
-            <ode>
-              <kp>1e+09</kp>
-              <kd>0</kd>
-              <min_depth>0.001</min_depth>
-            </ode>
-          </contact>
-          <friction>
-            <ode>
-              <mu>0.9</mu>
-              <mu2>0.7</mu2>
-              <fdir1>1 0 0</fdir1>
-            </ode>
-          </friction>
-        </surface>
       </collision>
       <visual name='rear_right_wheel_link_visual'>
         <pose>0 0 0 0 -0 0</pose>
@@ -292,9 +228,9 @@
         </geometry>
       </visual>
     </link>
-    <static>0</static>
-    <plugin name='gazebo_ros_control' filename='libgazebo_ros_control.so'>
-      <robotNamespace>/</robotNamespace>
+    <plugin name='gz_ros2_control::GazeboSimROS2ControlPlugin' filename='libgz_ros2_control-system.so'>
+      <parameters>/home/jungle/workspaces/scout_sim_ws/install/scout_ugv_sim/share/scout_ugv_sim/config/scout_mini_control.yaml</parameters>
     </plugin>
+    <static>0</static>
   </model>
 </sdf>

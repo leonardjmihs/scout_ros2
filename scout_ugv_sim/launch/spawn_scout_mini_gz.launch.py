@@ -38,25 +38,49 @@ def generate_launch_description():
         'name', default_value=TextSubstitution(text='Scout'),
         description='Name of the entity'
     )
+    bridge_params = os.path.join(
+        ugv_sim_dir,
+        'params',
+        'scout_mini_bridge.yaml'
+    )
 
-    start_gazebo_ros_spawner_cmd = Node(
-        package='gazebo_ros',
-        executable='spawn_entity.py',
+    load_sim_nodes = Node(
+        package='ros_gz_sim',
+        executable='create',
+        output='screen',
         arguments=[
-            '-entity', name,
-            '-file', file,
-            '-x', x ,
-            '-y', y ,
-            '-z', z,
+                     '-file', file,
+                     '-name', name,
+                     '-x', x,
+                     '-y', y,
+                     '-z', z,
+                     '-R', roll,
+                     '-P', pitch,
+                     '-Y', yaw,
+                     ],
+    )
+
+    start_gazebo_ros_bridge_cmd = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=[
+            '--ros-args',
+            '-p',
+            f'config_file:={bridge_params}',
         ],
         output='screen',
     )
 
-
     ld = launch.LaunchDescription()
     ld.add_action(declare_file_cmd)
     ld.add_action(declare_name_cmd)
-    ld.add_action(start_gazebo_ros_spawner_cmd)
     # ld.add_action(load_server_node)
+    ld.add_action(load_sim_nodes)
     # ld.add_action(load_composable_nodes)turtlebot3_gazebo
+    ld.add_action(start_gazebo_ros_bridge_cmd)
     return ld
+    
+
+    return launch.LaunchDescription([
+
+    ])
