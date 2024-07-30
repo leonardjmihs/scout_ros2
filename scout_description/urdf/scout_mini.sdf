@@ -1,3 +1,4 @@
+<?xml version="1.0" ?>
 <sdf version='1.7'>
   <model name='scout_mini'>
     <link name='base_link'>
@@ -40,15 +41,6 @@
           </mesh>
         </geometry>
       </visual>
-      <visual name='base_link_fixed_joint_lump__lidar_sensor_visual_visual_1'>
-        <pose>-0.064 0 0.342 0 -0 0</pose>
-        <geometry>
-          <cylinder>
-            <length>0.055</length>
-            <radius>0.0508</radius>
-          </cylinder>
-        </geometry>
-      </visual>
     </link>
     <joint name='front_left_wheel' type='revolute'>
       <pose relative_to='base_link'>0.231976 0.208252 -0.100998 -1.57 0 0</pose>
@@ -88,6 +80,23 @@
             <uri>model://scout_description/meshes/wheel.dae</uri>
           </mesh>
         </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <kp>1e+07</kp>
+              <kd>1</kd>
+              <min_depth>0.001</min_depth>
+            </ode>
+          </contact>
+          <friction>
+            <ode>
+              <mu>1</mu>
+              <mu2>0.9</mu2>
+              <fdir1>1 0 0</fdir1>
+            </ode>
+          </friction>
+        </surface>
+        <max_contacts>64</max_contacts>
       </collision>
       <visual name='front_left_wheel_link_visual'>
         <pose>0 0 0 0 -0 0</pose>
@@ -299,7 +308,7 @@
     </link>
     <link name="base_scan">
       <inertial>
-        <pose>-0.020 0 0.161 0 0 0</pose>
+        <pose>0.000 0 0.09 0 0 0</pose>
         <inertia>
           <ixx>0.001</ixx>
           <ixy>0.000</ixy>
@@ -308,33 +317,33 @@
           <iyz>0.000</iyz>
           <izz>0.001</izz>
         </inertia>
-        <mass>0.114</mass>
+        <mass>0.0001</mass>
       </inertial>
 
       <collision name="lidar_sensor_collision">
-        <pose>-0.020 0 0.161 0 0 0</pose>
+        <pose>0.000 0 0.01 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.0108</radius>
+            <length>0.015</length>
+          </cylinder>
+        </geometry>
+      </collision>
+
+      <visual name="lidar_sensor_visual">
+        <pose>-0.020 0 0.05 0 0 0</pose>
         <geometry>
           <cylinder>
             <radius>0.0508</radius>
             <length>0.055</length>
           </cylinder>
         </geometry>
-      </collision>
-
-      <visual name="lidar_sensor_visual">
-        <pose>-0.032 0 0.171 0 0 0</pose>
-        <geometry>
-          <mesh>
-            <uri>model://turtlebot3_common/meshes/lds.dae</uri>
-            <scale>0.001 0.001 0.001</scale>
-          </mesh>
-        </geometry>
       </visual>
 
       <sensor name="hls_lfcd_lds" type="ray">
         <always_on>true</always_on>
         <visualize>true</visualize>
-        <pose>-0.032 0 0.171 0 0 0</pose>
+        <pose>0.020 0 0.1 0 0 0</pose>
         <update_rate>5</update_rate>
         <ray>
           <scan>
@@ -369,7 +378,7 @@
     <joint name="lidar_joint" type="fixed">
         <parent>base_link</parent>
         <child>base_scan</child>
-        <origin xyz="-0.032 0 0.171" rpy="0 0 0"/>
+      <origin xyz="0.0 0.0 0.05" rpy="0 0 0"/>
         <axis>
           <xyz>0 0 1</xyz>
         </axis>
@@ -393,7 +402,7 @@
       <wheel_diameter>0.15918</wheel_diameter>
       <robot_base_frame>base_link</robot_base_frame>
       <odometry_frame>odom</odometry_frame>
-      <max_wheel_torque>1000</max_wheel_torque>
+      <max_wheel_torque>30</max_wheel_torque>
       <publish_odom>1</publish_odom>
       <publish_odom_tf>1</publish_odom_tf>
       <publish_wheel_tf>1</publish_wheel_tf>
