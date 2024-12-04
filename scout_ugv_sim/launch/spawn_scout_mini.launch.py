@@ -17,7 +17,7 @@ ros_gz_sim = get_package_share_directory('ros_gz_sim')
 ugv_sim_dir = get_package_share_directory('scout_ugv_sim')
 
 def generate_launch_description():
-    model_name = 'scout_mini'
+    model_name = 'grogu'
     model_path = os.path.join(get_package_share_directory('scout_description'), "urdf")
     file = LaunchConfiguration('file')
     name = LaunchConfiguration('name')
