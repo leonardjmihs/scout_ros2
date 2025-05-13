@@ -18,7 +18,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/spirolife/ros2_ws/install/scout_description/share/scout_description/meshes/grogu_base_link2.dae</uri>
+            <uri>model://scout_description/meshes/grogu_base_link2.dae</uri>
           </mesh>
         </geometry>
       </collision>
@@ -45,7 +45,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/spirolife/ros2_ws/install/scout_description/share/scout_description/meshes/grogu_base_link2.dae</uri>
+            <uri>model://scout_description/meshes/grogu_base_link2.dae</uri>
           </mesh>
         </geometry>
       </visual>
@@ -146,6 +146,10 @@
           </noise>
         </ray>
         <plugin name='laser_controller' filename='libgazebo_ros_ray_sensor.so'>
+          <ros>
+            <remapping>~/out:=/scan</remapping>
+          </ros>
+          <output_type>sensor_msgs/LaserScan</output_type>
           <frame_name>base_scan_lidar</frame_name>
         </plugin>
         <pose>-0.032 0 0.171 0 -0 0</pose>
